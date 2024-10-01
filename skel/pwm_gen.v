@@ -11,7 +11,7 @@ module pwm_gen #(parameter PWM_PERCENT = 25) (
    // the 12-bit counter goes from 0 to 4095
    //  we want to check if pwm_cnt < (PWM_PERCENT / 100) * 4096
    //  to avoid division and fractions, we use:
-   assign pwm_out = pwm_cnt < (PWM_PERCENT * 410);
+   assign pwm_out = pwm_cnt < (PWM_PERCENT * 41);
    
 endmodule
 
