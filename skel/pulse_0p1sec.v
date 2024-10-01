@@ -7,7 +7,7 @@ module pulse_0p1sec (
    
    // 100MHz clock divide by 10 million - needs 24 bits
    // to simulate faster, define a smaller divider
-`ifdef SIMULATION
+`ifndef SYNTHESIS
    localparam	MAXDIV = 99999;
 `else
    localparam	MAXDIV = 9999999;
@@ -29,7 +29,7 @@ module pulse_0p1sec (
 	  end
      end
 
-`ifdef SIMULATION
+`ifndef SYNTHESIS
    always @(posedge clk)
      begin
 	if (pulse) $display("0.1sec pulse");
