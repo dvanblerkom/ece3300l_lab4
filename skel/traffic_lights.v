@@ -13,8 +13,8 @@ module traffic_lights(
 	    );
 
    wire [1:0]	   color_1, color_2;
-   wire [7:0]	   display_time;
-   wire [11:0]	   b_bcd;
+   wire [7:0]	   display_time_1, display_time_2;
+   wire [11:0]	   b_bcd_1, b_bcd_2;
    wire [2:0]	   sel;
    wire [3:0]	   bcd_digit;
    wire [6:0]	   countdown;
@@ -24,18 +24,20 @@ module traffic_lights(
 
    timer_12sec tu3 (.clk(clk), .countdown(countdown));
    
-   state_decode tu4 (.countdown(countdown), .color_light_1(color_1), .color_light_2(color_2), .display_time(display_time));
+   state_decode tu4 (.countdown(countdown), .color_light_1(color_1), .color_light_2(color_2), 
+		     .display_time_1(display_time_1), .display_time_2(display_time_2));
 
-   doubdab_8bits u2 (.b_in (display_time), .bcd_out (b_bcd));
+   doubdab_8bits u5 (.b_in (display_time_1), .bcd_out (b_bcd_1));
+   doubdab_8bits u6 (.b_in (display_time_2), .bcd_out (b_bcd_2));
 
-   count_3bit_select u3 (.clk(clk), .sel(sel));
+   count_3bit_select u7 (.clk(clk), .sel(sel));
 
-   decode_enb_leds u4 (.sel(sel), .enb_leds(enb_leds));
+   decode_enb_leds u8 (.sel(sel), .enb_leds(enb_leds));
 
-   mux_4in_8to1 u5 (.in0(b_bcd[3:0]), .in1(b_bcd[7:4]), .in2(b_bcd[11:8]), .in3(4'h0), 
-		    .in4(4'h0), .in5(4'h0), .in6(4'h0), .in7(4'h0), .sel(sel), .out(bcd_digit) );
+   mux_4in_8to1 u9 (.in0(b_bcd_1[3:0]), .in1(b_bcd_1[7:4]), .in2(b_bcd_1[11:8]), .in3(4'h0), 
+		    .in4(b_bcd_2[3:0]), .in5(b_bcd_2[7:4]), .in6(b_bcd_2[11:8]), .in7(4'h0), .sel(sel), .out(bcd_digit) );
 
-   seven_seg_decoder u6 (.b_in(bcd_digit), .inv_leds(inv_leds));
+   seven_seg_decoder u10 (.b_in(bcd_digit), .inv_leds(inv_leds));
    
 endmodule	
 

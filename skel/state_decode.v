@@ -4,7 +4,8 @@ module state_decode (
 		 input [6:0] countdown,
 		 output reg [1:0] color_light_1,
 		 output reg [1:0] color_light_2,
-		 output reg [7:0] display_time
+		 output reg [7:0] display_time_1,
+		 output reg [7:0] display_time_2
 		 );
 		 
    localparam RED = 0;
@@ -15,7 +16,7 @@ module state_decode (
 //
 // Fill in the Verilog code required to
 //   generate the correct LED colors and
-//   the number to display on the 7-segment
+//   the numbers to display on the 7-segment
 //   display.
 //
    
